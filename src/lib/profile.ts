@@ -73,7 +73,7 @@ export const melina: Profile = {
       label: 'Showreel',
       description: 'Watch our latest work',
       icon: 'play',
-      href: 'https://www.baitsociety.ai/reel',
+      href: '/reel',
     },
     {
       id: 'book',
