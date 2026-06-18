@@ -1,9 +1,9 @@
-// VISTAP — Melina's tap-to-share profile configuration.
+// Bait Tap App — Melina's tap-to-share profile configuration.
 //
 // This is the ONE place to edit Melina's links and contact details.
 // After changing anything here, redeploy. The physical NFC cards and the
-// on-screen QR code both point at the SAME page (/melina), so you never need
-// to reprogram a card just because a link changed — only edit it here.
+// on-screen QR code both point at the SAME page, so you never need to
+// reprogram a card just because a link changed — only edit it here.
 
 export interface ProfileLink {
   /** Stable id, used for React keys. */

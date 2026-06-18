@@ -1,4 +1,4 @@
-import { buildVCard, melina } from '@/lib/vistap';
+import { buildVCard, melina } from '@/lib/profile';
 
 // Returns Melina's contact card so anyone who taps "Save my contact" gets a
 // native Add-to-Contacts prompt on iPhone and Android.

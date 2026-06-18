@@ -1,4 +1,4 @@
-# VISTAP
+# Bait Tap App
 
 A standalone "tap-to-share" digital business card. Melina (Producer, Bait
 Society) shares all her links by **tapping a physical NFC card** to someone's
@@ -26,7 +26,7 @@ whatever domain it's served from — no hardcoded host.
 
 An iPhone **cannot** push a website to another phone just by touching phones —
 Apple does not let third-party apps emulate an NFC tag, and Bluetooth has the
-same restriction. So, like Popl / V1CE / commercial "tap" cards, VISTAP uses:
+same restriction. So, like Popl / V1CE / commercial "tap" cards, this app uses:
 
 1. One web page (the home page) holding all the links.
 2. Sharing via **physical NFC cards** programmed once to open that page, **and**

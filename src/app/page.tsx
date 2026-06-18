@@ -13,7 +13,7 @@ import {
   Check,
 } from 'lucide-react';
 import Logo from '@/components/Logo';
-import { melina, type ProfileLink } from '@/lib/vistap';
+import { melina, type ProfileLink } from '@/lib/profile';
 
 const ICONS = {
   globe: Globe,
@@ -144,7 +144,7 @@ export default function MelinaProfile() {
           )}
         </div>
 
-        <p className="text-xs text-neutral-600 mt-10">Tap. Connect. — powered by VISTAP</p>
+        <p className="text-xs text-neutral-600 mt-10">Tap. Connect. — Bait Tap App</p>
       </div>
 
       {/* QR overlay */}
