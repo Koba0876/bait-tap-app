@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Netlify form detection</title>
+  </head>
+  <body>
+    <!--
+      This hidden static form exists ONLY so Netlify registers the "connect"
+      form at build time (Netlify scans deployed HTML for forms). The real,
+      styled form is the React component in src/components/ConnectForm.tsx,
+      which POSTs its data to this file. Keep the field names here in sync
+      with that component.
+    -->
+    <form name="connect" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="connect" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="company" />
+      <input type="text" name="bot-field" />
+    </form>
+  </body>
+</html>

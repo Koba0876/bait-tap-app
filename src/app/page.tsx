@@ -14,6 +14,7 @@ import {
   Check,
 } from 'lucide-react';
 import Logo from '@/components/Logo';
+import ConnectForm from '@/components/ConnectForm';
 import { melina, type ProfileLink } from '@/lib/profile';
 
 const ICONS = {
@@ -118,6 +119,11 @@ export default function MelinaProfile() {
           {profile.links.map((link) => (
             <ProfileButton key={link.id} link={link} />
           ))}
+        </div>
+
+        {/* Reverse exchange — let the visitor send Melina their details */}
+        <div className="w-full">
+          <ConnectForm recipientFirstName={profile.name.split(' ')[0]} />
         </div>
 
         {/* Share actions */}
