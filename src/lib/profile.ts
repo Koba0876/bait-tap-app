@@ -44,6 +44,10 @@ export interface Profile {
     email?: string;
     phone?: string;
     website?: string;
+    /** Personal LinkedIn profile URL — shown as a labelled link in the contact. */
+    linkedin?: string;
+    /** Instagram profile URL — shown as a labelled link in the contact. */
+    instagram?: string;
   };
 }
 
@@ -106,6 +110,8 @@ export const melina: Profile = {
     email: 'melina@baitsociety.ai',
     phone: '+39 329 106 1147',
     website: 'https://www.baitsociety.ai',
+    linkedin: 'https://www.linkedin.com/in/melina-mignani-30b33225/',
+    instagram: 'https://www.instagram.com/bait.society',
   },
 };
 
@@ -123,6 +129,20 @@ export function buildVCard(profile: Profile): string {
   if (contact.email) lines.push(`EMAIL;TYPE=WORK:${contact.email}`);
   if (contact.phone) lines.push(`TEL;TYPE=CELL:${contact.phone}`);
   if (contact.website) lines.push(`URL:${contact.website}`);
+  // Social profiles use Apple's grouped item/X-ABLabel convention so iOS
+  // Contacts shows a proper "LinkedIn"/"Instagram" label; other apps still
+  // read each line as a tappable URL.
+  let socialGroup = 0;
+  if (contact.linkedin) {
+    socialGroup += 1;
+    lines.push(`item${socialGroup}.URL:${contact.linkedin}`);
+    lines.push(`item${socialGroup}.X-ABLabel:LinkedIn`);
+  }
+  if (contact.instagram) {
+    socialGroup += 1;
+    lines.push(`item${socialGroup}.URL:${contact.instagram}`);
+    lines.push(`item${socialGroup}.X-ABLabel:Instagram`);
+  }
   lines.push('END:VCARD');
   return lines.join('\r\n');
 }
