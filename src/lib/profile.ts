@@ -70,7 +70,6 @@ export const melina: Profile = {
       description: 'Visit our website',
       icon: 'globe',
       href: 'https://www.baitsociety.ai',
-      primary: true,
     },
     {
       id: 'reel',

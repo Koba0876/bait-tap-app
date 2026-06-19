@@ -99,9 +99,6 @@ export default function MelinaProfile() {
       />
 
       <div className="relative w-full max-w-sm flex flex-col items-center gap-[clamp(0.5rem,1.8svh,1rem)]">
-        {/* Brand */}
-        <Logo className="h-[clamp(1.5rem,3.4svh,1.9rem)] w-auto" />
-
         {/* Avatar */}
         <div className="h-[clamp(4rem,11svh,5.25rem)] w-[clamp(4rem,11svh,5.25rem)] rounded-full overflow-hidden ring-2 ring-neutral-800 bg-black flex items-center justify-center">
           {profile.avatar ? (
@@ -160,7 +157,11 @@ export default function MelinaProfile() {
           )}
         </div>
 
-        <p className="text-[11px] tracking-wide text-neutral-600">Tap. Connect. — Bait Tap App</p>
+        {/* Brand mark — moved to the bottom */}
+        <div className="flex flex-col items-center gap-1">
+          <Logo className="h-[clamp(1.1rem,2.8svh,1.5rem)] w-auto opacity-90" />
+          <p className="text-[11px] tracking-wide text-neutral-600">Tap. Connect. — Bait Tap App</p>
+        </div>
       </div>
 
       {/* QR overlay */}
