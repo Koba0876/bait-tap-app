@@ -13,7 +13,7 @@ export interface ProfileLink {
   /** Short helper line under the label. */
   description?: string;
   /** lucide-react icon name handled in the page. */
-  icon: 'globe' | 'calendar' | 'play' | 'contact' | 'link';
+  icon: 'globe' | 'calendar' | 'play' | 'contact' | 'instagram' | 'link';
   /**
    * Destination. Use a full https:// URL for external links, a leading "/"
    * for internal pages (e.g. the booking page), or the special value
@@ -74,6 +74,13 @@ export const melina: Profile = {
       description: 'Watch our latest work',
       icon: 'play',
       href: '/reel',
+    },
+    {
+      id: 'instagram',
+      label: 'Instagram',
+      description: '@bait.society',
+      icon: 'instagram',
+      href: 'https://www.instagram.com/bait.society',
     },
     {
       id: 'book',

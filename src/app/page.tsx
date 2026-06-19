@@ -5,6 +5,7 @@ import {
   Globe,
   CalendarDays,
   PlayCircle,
+  Instagram,
   UserPlus,
   Link as LinkIcon,
   QrCode,
@@ -19,6 +20,7 @@ const ICONS = {
   globe: Globe,
   calendar: CalendarDays,
   play: PlayCircle,
+  instagram: Instagram,
   contact: UserPlus,
   link: LinkIcon,
 } as const;
