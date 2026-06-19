@@ -59,9 +59,9 @@ export interface Profile {
 export const melina: Profile = {
   slug: '/',
   name: 'Melina Mignani',
-  role: 'Producer',
+  role: 'Executive Producer',
   company: 'Bait Society',
-  tagline: 'Producer · Bait Society',
+  tagline: 'Executive Producer · Bait Society',
   avatar: '/Logo_Bird_BS_480.png',
   links: [
     {
@@ -106,7 +106,7 @@ export const melina: Profile = {
     firstName: 'Melina',
     lastName: 'Mignani',
     organization: 'Bait Society',
-    title: 'Producer',
+    title: 'Executive Producer',
     email: 'melina@baitsociety.ai',
     phone: '+39 329 106 1147',
     website: 'https://www.baitsociety.ai',
