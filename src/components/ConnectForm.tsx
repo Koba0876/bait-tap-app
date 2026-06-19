@@ -68,9 +68,15 @@ export default function ConnectForm({ recipientFirstName }: { recipientFirstName
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center justify-center gap-2 w-full rounded-xl px-4 py-[clamp(0.5rem,1.4svh,0.7rem)] border border-neutral-700 bg-neutral-900/80 text-[15px] font-semibold hover:bg-neutral-800 transition-colors"
+        className="flex items-center gap-3 w-full rounded-xl px-4 py-[clamp(0.5rem,1.4svh,0.7rem)] text-left border border-neutral-800 bg-neutral-900/80 text-neutral-100 hover:bg-neutral-800 transition-colors"
       >
-        <Send className="h-4 w-4" /> Share your details
+        <Send className="h-5 w-5 shrink-0 text-neutral-300" />
+        <span className="flex flex-col">
+          <span className="font-semibold text-[15px] leading-tight">Share your details</span>
+          <span className="text-xs leading-tight text-neutral-400">
+            Send {recipientFirstName} your contact
+          </span>
+        </span>
       </button>
 
       {open && (

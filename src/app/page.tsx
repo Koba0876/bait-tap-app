@@ -126,15 +126,13 @@ export default function MelinaProfile() {
           </p>
         </div>
 
-        {/* Links */}
+        {/* Links — "Share your details" leads the list */}
         <div className="w-full flex flex-col gap-2">
+          <ConnectForm recipientFirstName={profile.name.split(' ')[0]} />
           {profile.links.map((link) => (
             <ProfileButton key={link.id} link={link} />
           ))}
         </div>
-
-        {/* Reverse exchange — let the visitor send Melina their details */}
-        <ConnectForm recipientFirstName={profile.name.split(' ')[0]} />
 
         {/* Share actions */}
         <div className="w-full grid grid-cols-2 gap-2">

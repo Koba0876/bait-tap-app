@@ -87,14 +87,6 @@ export const melina: Profile = {
       href: 'https://www.instagram.com/bait.society',
     },
     {
-      id: 'book',
-      label: 'Book a meeting',
-      description: 'Find a time on the calendar',
-      icon: 'calendar',
-      // Booking lives in the separate scheduler app — edit this to your URL.
-      href: 'https://meeting-scheduler-bait-society.netlify.app/meeting',
-    },
-    {
       id: 'contact',
       label: 'Save my contact',
       description: 'Add Melina to your phone',
