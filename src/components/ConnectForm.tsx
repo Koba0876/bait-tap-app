@@ -68,9 +68,9 @@ export default function ConnectForm({ recipientFirstName }: { recipientFirstName
     <>
       <button
         onClick={() => setOpen(true)}
-        className="flex items-center justify-center gap-2 w-full rounded-2xl px-5 py-4 mt-3 border border-neutral-700 bg-neutral-900 text-neutral-100 font-semibold hover:bg-neutral-800 transition-colors"
+        className="flex items-center justify-center gap-2 w-full rounded-xl px-4 py-[clamp(0.5rem,1.4svh,0.7rem)] border border-neutral-700 bg-neutral-900/80 text-[15px] font-semibold hover:bg-neutral-800 transition-colors"
       >
-        <Send className="h-5 w-5" /> Share your details
+        <Send className="h-4 w-4" /> Share your details
       </button>
 
       {open && (
@@ -79,7 +79,7 @@ export default function ConnectForm({ recipientFirstName }: { recipientFirstName
           onClick={close}
         >
           <div
-            className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 w-full max-w-sm relative"
+            className="bg-neutral-900 border border-neutral-800 rounded-2xl p-6 w-full max-w-sm relative max-h-[90svh] overflow-y-auto"
             onClick={(e) => e.stopPropagation()}
           >
             <button

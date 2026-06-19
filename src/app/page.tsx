@@ -91,13 +91,19 @@ export default function MelinaProfile() {
     .toUpperCase();
 
   return (
-    <main className="min-h-screen bg-neutral-950 text-neutral-100 flex flex-col items-center px-5 py-10">
-      <div className="w-full max-w-md flex flex-col items-center">
+    <main className="relative h-[100svh] overflow-hidden bg-neutral-950 text-neutral-100 flex flex-col items-center justify-center px-5 py-[clamp(0.75rem,3svh,1.75rem)]">
+      {/* Soft atmospheric glow — adds depth without taking vertical space */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_16%,rgba(255,255,255,0.07),transparent_55%)]"
+      />
+
+      <div className="relative w-full max-w-sm flex flex-col items-center gap-[clamp(0.5rem,1.8svh,1rem)]">
         {/* Brand */}
-        <Logo className="h-10 w-auto mb-8" />
+        <Logo className="h-[clamp(1.5rem,3.4svh,1.9rem)] w-auto" />
 
         {/* Avatar */}
-        <div className="h-28 w-28 rounded-full overflow-hidden ring-2 ring-neutral-800 bg-black flex items-center justify-center mb-5">
+        <div className="h-[clamp(4rem,11svh,5.25rem)] w-[clamp(4rem,11svh,5.25rem)] rounded-full overflow-hidden ring-2 ring-neutral-800 bg-black flex items-center justify-center">
           {profile.avatar ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
@@ -106,45 +112,49 @@ export default function MelinaProfile() {
               className="h-full w-full object-cover"
             />
           ) : (
-            <span className="text-3xl font-semibold text-neutral-400">{initials}</span>
+            <span className="text-2xl font-semibold text-neutral-400">{initials}</span>
           )}
         </div>
 
         {/* Identity */}
-        <h1 className="text-2xl font-semibold tracking-tight">{profile.name}</h1>
-        <p className="text-neutral-400 mt-1">{profile.tagline ?? `${profile.role} · ${profile.company}`}</p>
+        <div className="flex flex-col items-center text-center">
+          <h1 className="text-[clamp(1.15rem,2.6svh,1.5rem)] font-semibold tracking-tight leading-none">
+            {profile.name}
+          </h1>
+          <p className="text-[clamp(0.8rem,1.7svh,0.9rem)] text-neutral-400 mt-1">
+            {profile.tagline ?? `${profile.role} · ${profile.company}`}
+          </p>
+        </div>
 
         {/* Links */}
-        <div className="w-full mt-8 flex flex-col gap-3">
+        <div className="w-full flex flex-col gap-2">
           {profile.links.map((link) => (
             <ProfileButton key={link.id} link={link} />
           ))}
         </div>
 
         {/* Reverse exchange — let the visitor send Melina their details */}
-        <div className="w-full">
-          <ConnectForm recipientFirstName={profile.name.split(' ')[0]} />
-        </div>
+        <ConnectForm recipientFirstName={profile.name.split(' ')[0]} />
 
         {/* Share actions */}
-        <div className="w-full mt-6 grid grid-cols-2 gap-3">
+        <div className="w-full grid grid-cols-2 gap-2">
           <button
             onClick={() => setShowQr(true)}
-            className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+            className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900/80 py-2.5 text-sm font-medium hover:bg-neutral-800 transition-colors"
           >
             <QrCode className="h-4 w-4" /> Show QR
           </button>
           {canShare ? (
             <button
               onClick={handleShare}
-              className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+              className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900/80 py-2.5 text-sm font-medium hover:bg-neutral-800 transition-colors"
             >
               <Share2 className="h-4 w-4" /> Share
             </button>
           ) : (
             <button
               onClick={handleCopy}
-              className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900 py-3 text-sm font-medium hover:bg-neutral-800 transition-colors"
+              className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900/80 py-2.5 text-sm font-medium hover:bg-neutral-800 transition-colors"
             >
               {copied ? <Check className="h-4 w-4 text-green-400" /> : <LinkIcon className="h-4 w-4" />}
               {copied ? 'Copied' : 'Copy link'}
@@ -152,7 +162,7 @@ export default function MelinaProfile() {
           )}
         </div>
 
-        <p className="text-xs text-neutral-600 mt-10">Tap. Connect. — Bait Tap App</p>
+        <p className="text-[11px] tracking-wide text-neutral-600">Tap. Connect. — Bait Tap App</p>
       </div>
 
       {/* QR overlay */}
@@ -198,10 +208,10 @@ function ProfileButton({ link }: { link: ProfileLink }) {
   const href = isVCard ? '/api/vcard' : link.href;
 
   const base =
-    'flex items-center gap-4 w-full rounded-2xl px-5 py-4 transition-colors border';
+    'flex items-center gap-3 w-full rounded-xl px-4 py-[clamp(0.5rem,1.4svh,0.7rem)] transition-colors border';
   const styles = link.primary
     ? 'bg-white text-neutral-900 border-white hover:bg-neutral-200'
-    : 'bg-neutral-900 text-neutral-100 border-neutral-800 hover:bg-neutral-800';
+    : 'bg-neutral-900/80 text-neutral-100 border-neutral-800 hover:bg-neutral-800';
 
   return (
     <a
@@ -210,11 +220,11 @@ function ProfileButton({ link }: { link: ProfileLink }) {
       rel={isExternal ? 'noopener noreferrer' : undefined}
       className={`${base} ${styles}`}
     >
-      <Icon className={`h-6 w-6 shrink-0 ${link.primary ? 'text-neutral-900' : 'text-neutral-300'}`} />
+      <Icon className={`h-5 w-5 shrink-0 ${link.primary ? 'text-neutral-900' : 'text-neutral-300'}`} />
       <span className="flex flex-col">
-        <span className="font-semibold leading-tight">{link.label}</span>
+        <span className="font-semibold text-[15px] leading-tight">{link.label}</span>
         {link.description && (
-          <span className={`text-sm ${link.primary ? 'text-neutral-600' : 'text-neutral-400'}`}>
+          <span className={`text-xs leading-tight ${link.primary ? 'text-neutral-600' : 'text-neutral-400'}`}>
             {link.description}
           </span>
         )}
