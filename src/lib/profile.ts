@@ -146,3 +146,30 @@ export function buildVCard(profile: Profile): string {
   lines.push('END:VCARD');
   return lines.join('\r\n');
 }
+
+/**
+ * Build a vCard (.vcf) for an arbitrary person captured via the "Share your
+ * details" form. Used by the /api/contact-vcard route so the lead-notification
+ * email can carry a one-tap "save to phone" link for each new contact.
+ */
+export function buildContactVCard(input: {
+  name: string;
+  email?: string;
+  phone?: string;
+  company?: string;
+}): string {
+  const parts = input.name.trim().split(/\s+/);
+  const firstName = parts[0] ?? input.name;
+  const lastName = parts.slice(1).join(' ');
+  const lines = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    `N:${lastName};${firstName};;;`,
+    `FN:${input.name}`,
+  ];
+  if (input.company) lines.push(`ORG:${input.company}`);
+  if (input.email) lines.push(`EMAIL;TYPE=WORK:${input.email}`);
+  if (input.phone) lines.push(`TEL;TYPE=CELL:${input.phone}`);
+  lines.push('END:VCARD');
+  return lines.join('\r\n');
+}

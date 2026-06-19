@@ -39,9 +39,16 @@ export default function ConnectForm({ recipientFirstName }: { recipientFirstName
       e.preventDefault();
       setStatus('sending');
       try {
+        // A ready-to-save link for the card owner: tapping it in the
+        // notification email downloads this person's .vcf to their phone.
+        const saveContactLink =
+          window.location.origin +
+          '/api/contact-vcard?' +
+          new URLSearchParams(form).toString();
         const body = new URLSearchParams({
           'form-name': 'connect',
           ...form,
+          save_contact: saveContactLink,
         }).toString();
         const res = await fetch('/__forms.html', {
           method: 'POST',
