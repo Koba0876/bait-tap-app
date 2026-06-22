@@ -27,7 +27,9 @@ export async function GET(request: Request) {
   return new Response(JSON.stringify(manifest), {
     headers: {
       'Content-Type': 'application/manifest+json; charset=utf-8',
-      'Cache-Control': 'public, max-age=3600',
+      // Per-slug response — must NOT be CDN-cached, as Netlify's durable cache
+      // keys on path only and would serve one profile's manifest for all.
+      'Cache-Control': 'no-store',
     },
   });
 }

@@ -15,7 +15,9 @@ export async function GET(request: Request) {
     headers: {
       'Content-Type': 'text/vcard; charset=utf-8',
       'Content-Disposition': `attachment; filename="${filename}.vcf"`,
-      'Cache-Control': 'public, max-age=3600',
+      // Per-slug response — must NOT be CDN-cached (Netlify durable cache keys
+      // on path only, so caching would serve one person's card for all slugs).
+      'Cache-Control': 'no-store',
     },
   });
 }
