@@ -114,7 +114,6 @@ export const melina: Profile = {
 
 // ---------------------------------------------------------------------------
 // GIANFRANCO GAIONI — Founder / EP (card lives at /koba).
-// TODO: add a work email if he wants one shown on the card.
 // ---------------------------------------------------------------------------
 
 export const koba: Profile = {
@@ -159,6 +158,7 @@ export const koba: Profile = {
     lastName: 'Gaioni',
     organization: 'Bait Society',
     title: 'Founder / Executive Producer',
+    email: 'koba@baitsociety.ai',
     phone: '+66 082 9735713',
     whatsapp: '+39 366 1799093',
     website: 'https://www.baitsociety.ai',
