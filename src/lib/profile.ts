@@ -17,7 +17,7 @@ export interface ProfileLink {
   /** Short helper line under the label. */
   description?: string;
   /** lucide-react icon name handled in the page. */
-  icon: 'globe' | 'calendar' | 'play' | 'contact' | 'instagram' | 'link';
+  icon: 'globe' | 'calendar' | 'play' | 'contact' | 'instagram' | 'whatsapp' | 'link';
   /**
    * Destination. Use a full https:// URL for external links, a leading "/"
    * for internal pages (e.g. the booking page), or the special value
@@ -47,6 +47,8 @@ export interface Profile {
     title: string;
     email?: string;
     phone?: string;
+    /** WhatsApp number — saved as a labelled phone in the contact card. */
+    whatsapp?: string;
     website?: string;
     /** Personal LinkedIn profile URL — shown as a labelled link in the contact. */
     linkedin?: string;
@@ -111,16 +113,16 @@ export const melina: Profile = {
 };
 
 // ---------------------------------------------------------------------------
-// KOBA — TODO: confirm full name, title, work email, phone and personal socials
-// before handing this card out. Placeholders are marked TODO below.
+// GIANFRANCO GAIONI — Founder / EP (card lives at /koba).
+// TODO: add a work email if he wants one shown on the card.
 // ---------------------------------------------------------------------------
 
 export const koba: Profile = {
   slug: '/koba',
-  name: 'Koba', // TODO: full name
-  role: 'Director',
+  name: 'Gianfranco Gaioni',
+  role: 'Founder / Executive Producer',
   company: 'Bait Society',
-  tagline: 'Director · Bait Society',
+  tagline: 'Founder / Executive Producer · Bait Society',
   avatar: '/Logo_Bird_BS_480.png',
   links: [
     {
@@ -138,30 +140,28 @@ export const koba: Profile = {
       href: '/reel',
     },
     {
-      id: 'instagram',
-      label: 'Instagram',
-      description: '@bait.society',
-      icon: 'instagram',
-      href: 'https://www.instagram.com/bait.society',
+      id: 'whatsapp',
+      label: 'WhatsApp',
+      description: 'Message me directly',
+      icon: 'whatsapp',
+      href: 'https://wa.me/393661799093',
     },
     {
       id: 'contact',
       label: 'Save my contact',
-      description: 'Add Koba to your phone',
+      description: 'Add Gianfranco to your phone',
       icon: 'contact',
       href: 'vcard',
     },
   ],
   contact: {
-    firstName: 'Koba', // TODO: confirm
+    firstName: 'Gianfranco',
+    lastName: 'Gaioni',
     organization: 'Bait Society',
-    title: 'Director',
+    title: 'Founder / Executive Producer',
+    phone: '+66 082 9735713',
+    whatsapp: '+39 366 1799093',
     website: 'https://www.baitsociety.ai',
-    instagram: 'https://www.instagram.com/bait.society',
-    // TODO: add Koba's work email, phone and LinkedIn before sharing:
-    // email: 'koba@baitsociety.ai',
-    // phone: '+39 ...',
-    // linkedin: 'https://www.linkedin.com/in/...',
   },
 };
 
@@ -194,19 +194,24 @@ export function buildVCard(profile: Profile): string {
   if (contact.email) lines.push(`EMAIL;TYPE=WORK:${contact.email}`);
   if (contact.phone) lines.push(`TEL;TYPE=CELL:${contact.phone}`);
   if (contact.website) lines.push(`URL:${contact.website}`);
-  // Social profiles use Apple's grouped item/X-ABLabel convention so iOS
-  // Contacts shows a proper "LinkedIn"/"Instagram" label; other apps still
-  // read each line as a tappable URL.
-  let socialGroup = 0;
+  // WhatsApp number + social profiles use Apple's grouped item/X-ABLabel
+  // convention so iOS Contacts shows a proper "WhatsApp"/"LinkedIn"/"Instagram"
+  // label; other apps still read each line as a normal phone / URL.
+  let group = 0;
+  if (contact.whatsapp) {
+    group += 1;
+    lines.push(`item${group}.TEL:${contact.whatsapp}`);
+    lines.push(`item${group}.X-ABLabel:WhatsApp`);
+  }
   if (contact.linkedin) {
-    socialGroup += 1;
-    lines.push(`item${socialGroup}.URL:${contact.linkedin}`);
-    lines.push(`item${socialGroup}.X-ABLabel:LinkedIn`);
+    group += 1;
+    lines.push(`item${group}.URL:${contact.linkedin}`);
+    lines.push(`item${group}.X-ABLabel:LinkedIn`);
   }
   if (contact.instagram) {
-    socialGroup += 1;
-    lines.push(`item${socialGroup}.URL:${contact.instagram}`);
-    lines.push(`item${socialGroup}.X-ABLabel:Instagram`);
+    group += 1;
+    lines.push(`item${group}.URL:${contact.instagram}`);
+    lines.push(`item${group}.X-ABLabel:Instagram`);
   }
   lines.push('END:VCARD');
   return lines.join('\r\n');
