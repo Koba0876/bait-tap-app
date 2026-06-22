@@ -32,6 +32,8 @@ export interface Profile {
   /** URL path this profile lives at, e.g. "/melina". NFC cards point here. */
   slug: string;
   name: string;
+  /** Friendly short name for UI copy ("Message Koba"); falls back to first name. */
+  nickname?: string;
   role: string;
   company: string;
   /** Short tagline under the name. */
@@ -118,7 +120,8 @@ export const melina: Profile = {
 
 export const koba: Profile = {
   slug: '/koba',
-  name: 'Gianfranco Gaioni',
+  name: 'Gianfranco "Koba" Gaioni',
+  nickname: 'Koba',
   role: 'Founder / Executive Producer',
   company: 'Bait Society',
   tagline: 'Founder / Executive Producer · Bait Society',
@@ -141,7 +144,7 @@ export const koba: Profile = {
     {
       id: 'whatsapp',
       label: 'WhatsApp',
-      description: 'Message me directly',
+      description: 'Message Koba',
       icon: 'whatsapp',
       href: 'https://wa.me/393661799093',
     },
@@ -155,7 +158,7 @@ export const koba: Profile = {
     {
       id: 'contact',
       label: 'Save my contact',
-      description: 'Add Gianfranco to your phone',
+      description: 'Add Koba to your phone',
       icon: 'contact',
       href: 'vcard',
     },
@@ -190,7 +193,7 @@ export function getProfile(slug: string): Profile | undefined {
 
 /** Build an RFC-6350 vCard (.vcf) string from a profile's contact details. */
 export function buildVCard(profile: Profile): string {
-  const { contact, name } = profile;
+  const { contact, name, nickname } = profile;
   const lines = [
     'BEGIN:VCARD',
     'VERSION:3.0',
@@ -199,6 +202,8 @@ export function buildVCard(profile: Profile): string {
     `ORG:${contact.organization}`,
     `TITLE:${contact.title}`,
   ];
+  // Nickname (e.g. "Koba") so Contacts shows it on the saved card.
+  if (nickname) lines.splice(4, 0, `NICKNAME:${nickname}`);
   if (contact.email) lines.push(`EMAIL;TYPE=WORK:${contact.email}`);
   if (contact.phone) lines.push(`TEL;TYPE=CELL:${contact.phone}`);
   if (contact.website) lines.push(`URL:${contact.website}`);

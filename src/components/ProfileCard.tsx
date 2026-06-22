@@ -179,7 +179,7 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
         {/* Links — "Share your details" leads the list */}
         <div className="w-full flex flex-col gap-2">
           <ConnectForm
-            recipientFirstName={profile.name.split(' ')[0]}
+            recipientFirstName={profile.nickname ?? profile.name.split(' ')[0]}
             profileName={profile.name}
           />
           {profile.links.map((link) => (
