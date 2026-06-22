@@ -146,6 +146,13 @@ export const koba: Profile = {
       href: 'https://wa.me/393661799093',
     },
     {
+      id: 'instagram',
+      label: 'Instagram',
+      description: '@bait.society',
+      icon: 'instagram',
+      href: 'https://www.instagram.com/bait.society',
+    },
+    {
       id: 'contact',
       label: 'Save my contact',
       description: 'Add Gianfranco to your phone',
@@ -159,9 +166,10 @@ export const koba: Profile = {
     organization: 'Bait Society',
     title: 'Founder / Executive Producer',
     email: 'koba@baitsociety.ai',
-    phone: '+66 082 9735713',
+    phone: '+66 82 973 5713',
     whatsapp: '+39 366 1799093',
     website: 'https://www.baitsociety.ai',
+    instagram: 'https://www.instagram.com/bait.society',
   },
 };
 
