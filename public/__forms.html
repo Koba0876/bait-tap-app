@@ -6,14 +6,24 @@
   </head>
   <body>
     <!--
-      This hidden static form exists ONLY so Netlify registers the "connect"
-      form at build time (Netlify scans deployed HTML for forms). The real,
-      styled form is the React component in src/components/ConnectForm.tsx,
-      which POSTs its data to this file. Keep the field names here in sync
-      with that component.
+      Hidden static forms ONLY for Netlify's build-time form detection. The real
+      styled form is src/components/ConnectForm.tsx, which POSTs here using the
+      per-profile form name "connect-<slug>". One form per profile means each
+      person gets their OWN Netlify form + their OWN email notification.
+      ADD A NEW <form> HERE (matching the slug) whenever you add a teammate.
     -->
-    <form name="connect" data-netlify="true" netlify-honeypot="bot-field" hidden>
-      <input type="hidden" name="form-name" value="connect" />
+    <form name="connect-melina" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="connect-melina" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="company" />
+      <input type="text" name="profile" />
+      <input type="text" name="save_contact" />
+      <input type="text" name="bot-field" />
+    </form>
+    <form name="connect-koba" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="connect-koba" />
       <input type="text" name="name" />
       <input type="email" name="email" />
       <input type="tel" name="phone" />

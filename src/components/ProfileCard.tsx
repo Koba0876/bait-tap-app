@@ -181,6 +181,7 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
           <ConnectForm
             recipientFirstName={profile.nickname ?? profile.name.split(' ')[0]}
             profileName={profile.name}
+            formName={`connect-${slug}`}
           />
           {profile.links.map((link) => (
             <ProfileButton

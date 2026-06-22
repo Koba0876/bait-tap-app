@@ -19,10 +19,14 @@ const EMPTY = { name: '', email: '', phone: '', company: '' };
 export default function ConnectForm({
   recipientFirstName,
   profileName,
+  formName,
 }: {
   recipientFirstName: string;
   /** Which card this lead came from — recorded so leads are attributable. */
   profileName: string;
+  /** Per-profile Netlify form name (e.g. "connect-koba"), so each person's
+   *  leads land in their own form and notify the right inbox. */
+  formName: string;
 }) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
@@ -53,7 +57,7 @@ export default function ConnectForm({
           '/api/contact-vcard?' +
           new URLSearchParams(form).toString();
         const body = new URLSearchParams({
-          'form-name': 'connect',
+          'form-name': formName,
           ...form,
           profile: profileName,
           save_contact: saveContactLink,
@@ -69,7 +73,7 @@ export default function ConnectForm({
         setStatus('error');
       }
     },
-    [form, profileName],
+    [form, profileName, formName],
   );
 
   return (
