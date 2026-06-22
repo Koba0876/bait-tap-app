@@ -1,9 +1,13 @@
-// Bait Tap App — Melina's tap-to-share profile configuration.
+// Bait Tap App — tap-to-share profile configuration.
 //
-// This is the ONE place to edit Melina's links and contact details.
-// After changing anything here, redeploy. The physical NFC cards and the
-// on-screen QR code both point at the SAME page, so you never need to
-// reprogram a card just because a link changed — only edit it here.
+// This is the ONE place to edit each person's links and contact details.
+// Every profile in the `profiles` registry (bottom of this file) gets its own
+// page at /<slug> (e.g. /melina, /koba) plus its own NFC card / QR — all
+// pointing at the SAME page, so you never reprogram a card when a link
+// changes; just edit it here and redeploy.
+//
+// To add a teammate: copy a profile block, change the details, and add it to
+// the `profiles` map at the bottom.
 
 export interface ProfileLink {
   /** Stable id, used for React keys. */
@@ -57,7 +61,7 @@ export interface Profile {
 // ---------------------------------------------------------------------------
 
 export const melina: Profile = {
-  slug: '/',
+  slug: '/melina',
   name: 'Melina Mignani',
   role: 'Executive Producer',
   company: 'Bait Society',
@@ -105,6 +109,76 @@ export const melina: Profile = {
     instagram: 'https://www.instagram.com/bait.society',
   },
 };
+
+// ---------------------------------------------------------------------------
+// KOBA — TODO: confirm full name, title, work email, phone and personal socials
+// before handing this card out. Placeholders are marked TODO below.
+// ---------------------------------------------------------------------------
+
+export const koba: Profile = {
+  slug: '/koba',
+  name: 'Koba', // TODO: full name
+  role: 'Director',
+  company: 'Bait Society',
+  tagline: 'Director · Bait Society',
+  avatar: '/Logo_Bird_BS_480.png',
+  links: [
+    {
+      id: 'website',
+      label: 'Bait Society',
+      description: 'Visit our website',
+      icon: 'globe',
+      href: 'https://www.baitsociety.ai',
+    },
+    {
+      id: 'reel',
+      label: 'Showreel',
+      description: 'Watch our latest work',
+      icon: 'play',
+      href: '/reel',
+    },
+    {
+      id: 'instagram',
+      label: 'Instagram',
+      description: '@bait.society',
+      icon: 'instagram',
+      href: 'https://www.instagram.com/bait.society',
+    },
+    {
+      id: 'contact',
+      label: 'Save my contact',
+      description: 'Add Koba to your phone',
+      icon: 'contact',
+      href: 'vcard',
+    },
+  ],
+  contact: {
+    firstName: 'Koba', // TODO: confirm
+    organization: 'Bait Society',
+    title: 'Director',
+    website: 'https://www.baitsociety.ai',
+    instagram: 'https://www.instagram.com/bait.society',
+    // TODO: add Koba's work email, phone and LinkedIn before sharing:
+    // email: 'koba@baitsociety.ai',
+    // phone: '+39 ...',
+    // linkedin: 'https://www.linkedin.com/in/...',
+  },
+};
+
+/**
+ * Registry of every profile, keyed by its URL slug segment. The dynamic route
+ * src/app/[slug]/page.tsx renders whichever profile matches /<slug>. Add a
+ * teammate by adding their profile here.
+ */
+export const profiles: Record<string, Profile> = {
+  melina,
+  koba,
+};
+
+/** Look up a profile by its URL slug segment (e.g. "melina"). */
+export function getProfile(slug: string): Profile | undefined {
+  return profiles[slug];
+}
 
 /** Build an RFC-6350 vCard (.vcf) string from a profile's contact details. */
 export function buildVCard(profile: Profile): string {

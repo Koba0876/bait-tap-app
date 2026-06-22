@@ -16,7 +16,14 @@ const EMPTY = { name: '', email: '', phone: '', company: '' };
  * visitor's saved contact in the keyboard suggestion bar: one tap fills the
  * whole form from their own address book — fast and typo-free.
  */
-export default function ConnectForm({ recipientFirstName }: { recipientFirstName: string }) {
+export default function ConnectForm({
+  recipientFirstName,
+  profileName,
+}: {
+  recipientFirstName: string;
+  /** Which card this lead came from — recorded so leads are attributable. */
+  profileName: string;
+}) {
   const [open, setOpen] = useState(false);
   const [status, setStatus] = useState<Status>('idle');
   const [form, setForm] = useState(EMPTY);
@@ -48,6 +55,7 @@ export default function ConnectForm({ recipientFirstName }: { recipientFirstName
         const body = new URLSearchParams({
           'form-name': 'connect',
           ...form,
+          profile: profileName,
           save_contact: saveContactLink,
         }).toString();
         const res = await fetch('/__forms.html', {
@@ -61,7 +69,7 @@ export default function ConnectForm({ recipientFirstName }: { recipientFirstName
         setStatus('error');
       }
     },
-    [form],
+    [form, profileName],
   );
 
   return (
