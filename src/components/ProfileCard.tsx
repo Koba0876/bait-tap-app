@@ -10,6 +10,7 @@ import {
   Link as LinkIcon,
   QrCode,
   Share2,
+  Bookmark,
   X,
   Check,
 } from 'lucide-react';
@@ -34,6 +35,7 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
   const [qrDataUrl, setQrDataUrl] = useState('');
   const [copied, setCopied] = useState(false);
   const [canShare, setCanShare] = useState(false);
+  const [bookmarkMsg, setBookmarkMsg] = useState<string | null>(null);
 
   useEffect(() => {
     // The QR + share always target THIS page, so the URL is whatever domain
@@ -82,6 +84,36 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
     } catch {
       /* clipboard blocked — ignore */
     }
+  }, [pageUrl]);
+
+  const handleBookmark = useCallback(() => {
+    // Modern browsers block adding a bookmark via JS, so try the legacy APIs
+    // (for the rare browser that still has them) and otherwise tell the person
+    // the keyboard shortcut / menu step for their device.
+    const w = window as unknown as {
+      external?: { AddFavorite?: (url: string, title: string) => void };
+      sidebar?: { addPanel?: (t: string, u: string, e: string) => void };
+    };
+    try {
+      if (w.external?.AddFavorite) {
+        w.external.AddFavorite(pageUrl, document.title);
+        return;
+      }
+      if (w.sidebar?.addPanel) {
+        w.sidebar.addPanel(document.title, pageUrl, '');
+        return;
+      }
+    } catch {
+      /* legacy API blocked — fall through to instructions */
+    }
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const isMac = /Mac|iPhone|iPad|iPod/.test(navigator.platform);
+    setBookmarkMsg(
+      isMobile
+        ? 'To save this page: open your browser menu and tap “Add bookmark” (or Share → Add to Home Screen).'
+        : `Press ${isMac ? '⌘' : 'Ctrl'} + D to bookmark this page.`,
+    );
+    setTimeout(() => setBookmarkMsg(null), 5000);
   }, [pageUrl]);
 
   const initials = profile.name
@@ -140,29 +172,35 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
         </div>
 
         {/* Share actions */}
-        <div className="w-full grid grid-cols-2 gap-2">
+        <div className="w-full grid grid-cols-3 gap-2">
           <button
             onClick={() => setShowQr(true)}
-            className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900/80 py-2.5 text-sm font-medium hover:bg-neutral-800 transition-colors"
+            className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-neutral-700 bg-neutral-900/80 px-2 py-2.5 text-[13px] font-medium hover:bg-neutral-800 transition-colors"
           >
-            <QrCode className="h-4 w-4" /> Show QR
+            <QrCode className="h-4 w-4 shrink-0" /> Show QR
           </button>
           {canShare ? (
             <button
               onClick={handleShare}
-              className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900/80 py-2.5 text-sm font-medium hover:bg-neutral-800 transition-colors"
+              className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-neutral-700 bg-neutral-900/80 px-2 py-2.5 text-[13px] font-medium hover:bg-neutral-800 transition-colors"
             >
-              <Share2 className="h-4 w-4" /> Share
+              <Share2 className="h-4 w-4 shrink-0" /> Share
             </button>
           ) : (
             <button
               onClick={handleCopy}
-              className="flex items-center justify-center gap-2 rounded-xl border border-neutral-700 bg-neutral-900/80 py-2.5 text-sm font-medium hover:bg-neutral-800 transition-colors"
+              className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-neutral-700 bg-neutral-900/80 px-2 py-2.5 text-[13px] font-medium hover:bg-neutral-800 transition-colors"
             >
-              {copied ? <Check className="h-4 w-4 text-green-400" /> : <LinkIcon className="h-4 w-4" />}
-              {copied ? 'Copied' : 'Copy link'}
+              {copied ? <Check className="h-4 w-4 shrink-0 text-green-400" /> : <LinkIcon className="h-4 w-4 shrink-0" />}
+              {copied ? 'Copied' : 'Copy'}
             </button>
           )}
+          <button
+            onClick={handleBookmark}
+            className="flex items-center justify-center gap-1.5 whitespace-nowrap rounded-xl border border-neutral-700 bg-neutral-900/80 px-2 py-2.5 text-[13px] font-medium hover:bg-neutral-800 transition-colors"
+          >
+            <Bookmark className="h-4 w-4 shrink-0" /> Bookmark
+          </button>
         </div>
 
         {/* Brand mark — at the bottom */}
@@ -201,6 +239,15 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
                 Generating…
               </div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Bookmark hint toast — browsers don't allow one-tap bookmarking */}
+      {bookmarkMsg && (
+        <div className="fixed inset-x-0 bottom-6 z-50 flex justify-center px-6 pointer-events-none">
+          <div className="pointer-events-auto max-w-xs rounded-xl bg-white text-neutral-900 text-sm font-medium px-4 py-3 shadow-lg text-center">
+            {bookmarkMsg}
           </div>
         </div>
       )}
