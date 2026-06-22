@@ -59,6 +59,15 @@ export interface Profile {
   };
 }
 
+/**
+ * The public, pretty base URL each card is reached at — your Squarespace
+ * domain, which redirects /melina and /koba to this app. Used for the on-card
+ * QR code and Share/Copy link so they always show the baitsociety.ai address
+ * instead of the underlying Netlify URL. App-internal links (/api/*, /reel,
+ * the lead form) intentionally stay relative so they resolve on the app itself.
+ */
+export const PUBLIC_BASE_URL = 'https://www.baitsociety.ai';
+
 // ---------------------------------------------------------------------------
 // EDIT BELOW — replace the placeholder values with Melina's real details.
 // Lines marked TODO are placeholders that should be confirmed before use.

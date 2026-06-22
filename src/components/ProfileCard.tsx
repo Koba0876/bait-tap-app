@@ -17,7 +17,7 @@ import {
 } from 'lucide-react';
 import Logo from '@/components/Logo';
 import ConnectForm from '@/components/ConnectForm';
-import type { Profile, ProfileLink } from '@/lib/profile';
+import { PUBLIC_BASE_URL, type Profile, type ProfileLink } from '@/lib/profile';
 
 const ICONS = {
   globe: Globe,
@@ -44,9 +44,9 @@ export default function ProfileCard({ profile }: { profile: Profile }) {
   } | null>(null);
 
   useEffect(() => {
-    // The QR + share always target THIS page, so the URL is whatever domain
-    // the page is served from — no hardcoded host needed.
-    setPageUrl(window.location.origin + profile.slug);
+    // QR + Share + Copy promote the pretty public URL (baitsociety.ai/<slug>),
+    // which redirects here — not the underlying Netlify URL the visitor is on.
+    setPageUrl(PUBLIC_BASE_URL + profile.slug);
     setCanShare(typeof navigator !== 'undefined' && !!navigator.share);
   }, [profile.slug]);
 
